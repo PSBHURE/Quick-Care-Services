@@ -1,0 +1,7 @@
+.bgimg {
+  background-image: url(./image/carebg.jpg);
+  background-size: cover;
+
+  height: 900px;
+  font-family: new time roman;
+}
