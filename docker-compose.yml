@@ -1,0 +1,46 @@
+
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1998
+      MYSQL_DATABASE: quickcare
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+      - ./SQL_File:/docker-entrypoint-initdb.d
+    networks:
+      - appbridge
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p1998"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  Quickcareservicee:
+    build:
+      context: .
+    container_name: expensesapp
+    environment:
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql:3306/quickcare?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true"                   
+      SPRING_DATASOURCE_PASSWORD: 1998
+    ports:
+      - "8080:8080"
+    networks:
+      - appbridge
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+networks:
+  appbridge:
+
+volumes:
+  mysql-data:
