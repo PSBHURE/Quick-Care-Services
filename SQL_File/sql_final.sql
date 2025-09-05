@@ -8,6 +8,7 @@ CREATE TABLE `quickcare`.`customer_details` (
   `cust_phone` VARCHAR(45) NULL,
   `cust_gender` VARCHAR(45) NULL,
   `cust_location` VARCHAR(45) NULL,
+  `usertype ` varchar(45),	
   PRIMARY KEY (`cust_id`));
 
 CREATE TABLE `quickcare`.`caretaker_details` (
@@ -22,6 +23,7 @@ CREATE TABLE `quickcare`.`caretaker_details` (
   `caretaker_location` VARCHAR(45) NULL,
   `caretaker_exp` VARCHAR(45) NULL,
   `charges` DOUBLE NULL,
+  `usertype ` varchar(45),		
   PRIMARY KEY (`caretaker_id`));
 
 CREATE TABLE `quickcare`.`patient_details` (
@@ -81,6 +83,7 @@ CREATE TABLE `quickcare`.`booking_details` (
   `reason_ofrejection` VARCHAR(45) NULL,
   `patient_id` INT NULL,
   `payment_status` VARCHAR(45) NULL,
+  `status` varchar(45),
   PRIMARY KEY (`booking_id`),
   INDEX `cust_bd_id_idx` (`cust_id` ASC) VISIBLE,
   INDEX `caretaker_bd_id_idx` (`caretaker_id` ASC) VISIBLE,
@@ -115,7 +118,6 @@ CREATE TABLE `quickcare`.`payment` (
   `debit_card` VARCHAR(45) NULL,
   `credit_card` VARCHAR(45) NULL,
   `upi` VARCHAR(45) NULL,
-  `mode_of_payment` VARCHAR(45) NULL,
   PRIMARY KEY (`payment_id`),
   INDEX `caretaker_p_id_idx` (`caretaker_id` ASC) VISIBLE,
   INDEX `patient_p_id_idx` (`patient_id` ASC) VISIBLE,
@@ -128,73 +130,12 @@ CREATE TABLE `quickcare`.`payment` (
     FOREIGN KEY (`patient_id`)
     REFERENCES `quickcare`.`patient_details` (`patient_id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
-    use quickcare;
-    select * from customer_details;
-    select * from caretaker_details;
-    select * from patient_details;
-    select * from feedback;
-    select * from booking_details;
-    select * from caretype;
-    select * from payment;
-    select * from customer_details;
-    select p.patient_name,c.caretaker_name,c.caretaker_location,p.caretype,p.status,b.reason_ofrejection from patient_details p,caretaker_details c,booking_details b where p.caretaker_id=c.caretaker_id and p.patient_id=b.patient_id;
-	select patient_id, patient_name, patient_location,from_date, to_date, caretype from patient_details;
-ALTER TABLE payment DROP COLUMN mode_of_payment;
- select patient_name,patient_location,patient_gender,patient_age,from_date,to_date,service_hr from patient_details where status='pending' and caretaker_id=2;
- 
-select patient_details.patient_name,patient_details.patient_location,patient_details.patient_gender,patient_details.patient_age,patient_details.from_date,patient_details.to_date,patient_details.service_hr from patient_details inner join caretaker_details on caretaker_details.caretaker_id=patient_details.caretaker_id where patient_details.status='pending';
-select p.patient_name,c.caretaker_name,c.caretaker_location,p.caretype,p.status,b.reason_ofrejection from patient_details p join caretaker_details c on p.caretaker_id=c.caretaker_id join booking_details b on p.patient_id=b.patient_id where p.cust_id=1;
-
-select p.patient_name,c.caretaker_name,c.caretaker_location,p.caretype,p.status,b.reason_ofrejection from patient_details p,caretaker_details c,booking_details b where p.caretaker_id=c.caretaker_id and p.patient_id=b.patient_id and p.cust_id=2;
-select p.patient_name,p.patient_location,p.status from patient_details p inner join caretaker_details c on p.caretaker_id=c.caretaker_id where p.status='accepted'and c.caretaker_id=2;
-select * from patient_details where cust_id=1;
-select patient_name,patient_location,patient_gender,patient_age,from_date,to_date,service_hr from patient_details where status='pending' and caretaker_id=2;
-UPDATE patient_details SET status = 'pending' WHERE patient_name = 'sak';
-
-UPDATE patient_details SET status = 'pending', caretaker_id = 2 WHERE patient_name ='';
-UPDATE patient_details SET status = 'pending' WHERE patient_name = 'Abhishek';
-
-update patient_details set status = "null" where patient_name = "Siya" ;
+    ON UPDATE NO ACTION); 
 
 Insert into patient_details (status) values ("pending");
-select p.patient_name,c.caretaker_name,c.caretaker_location,p.caretype,p.status,b.reason_ofrejection 
-from patient_details p join caretaker_details c 
-on p.caretaker_id=c.caretaker_id join booking_details b on p.patient_id=b.patient_id 
-where p.cust_id=2;
 insert into patient_details (caretaker_id,status) values (2,"pending");
-alter table booking_details add status varchar(45);
-insert into booking_details values (7,2,2,null,null,3,null,"pending");
-select patient_id from patient_details where patient_name="Abhishek";
-
-update patient_details  SET status = 'pending' WHERE patient_name = 'Abhishek';
-
-insert into booking_details (cust_id,caretaker_id,patient_id,status) 
-select cust_id,caretaker_id,patient_id,status from patient_details where patient_name="Siya";
- 
- select * from patient_details;
- select * from caretaker_details;
- select * from booking_details;
- /
-select p.patient_name,c.caretaker_name,c.caretaker_location,p.caretype,p.status,
-b.reason_ofrejection from patient_details p join caretaker_details c on 
-p.caretaker_id=c.caretaker_id join booking_details b on p.patient_id=b.patient_id 
-where b.cust_id=1;
-\
-
-select p.patient_id,c.caretaker_id from patient_details p join caretaker_details c
-on  p.caretaker_id=c.caretaker_id where p.cust_id=1;
 
 
-delete from p.patient_name,c.caretaker_name,c.caretaker_location,p.caretype,p.status,
-b.reason_ofrejection Using patient_details p join caretaker_details c on 
-p.caretaker_id=c.caretaker_id join booking_details b on p.patient_id=b.patient_id 
-where p.patient_name="sak" and c.caretaker_name="Aditi" and b.cust_id=1;
-select patient_name from patient_details where cust_id=2;
-
-alter table customer_details add usertype varchar(45);
-alter table caretaker_details add usertype varchar(45);
-select * from caretype;
 commit;
 
 
