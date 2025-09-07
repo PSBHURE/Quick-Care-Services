@@ -8,7 +8,7 @@ CREATE TABLE `quickcare`.`customer_details` (
   `cust_phone` VARCHAR(45) NULL,
   `cust_gender` VARCHAR(45) NULL,
   `cust_location` VARCHAR(45) NULL,
-  `usertype ` varchar(45),	
+  `usertype` varchar(45),	
   PRIMARY KEY (`cust_id`));
 
 CREATE TABLE `quickcare`.`caretaker_details` (
@@ -23,7 +23,7 @@ CREATE TABLE `quickcare`.`caretaker_details` (
   `caretaker_location` VARCHAR(45) NULL,
   `caretaker_exp` VARCHAR(45) NULL,
   `charges` DOUBLE NULL,
-  `usertype ` varchar(45),		
+  `usertype` varchar(45),		
   PRIMARY KEY (`caretaker_id`));
 
 CREATE TABLE `quickcare`.`patient_details` (
